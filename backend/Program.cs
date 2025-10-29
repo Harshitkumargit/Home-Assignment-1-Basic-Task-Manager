@@ -2,21 +2,25 @@ using TaskManagerAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add CORS for React frontend with proper configuration
+// Configure port for deployment (Render/Azure/Railway)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
+// Add CORS for React frontend with production URLs
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
         policy =>
         {
-            policy.WithOrigins(
-                "http://localhost:5173",  // Vite default port
-                "http://localhost:3000",  // Create React App port
-                "http://localhost:5174",  // Vite alternative port
-                "http://localhost:4173"   // Vite preview port
+            policy.SetIsOriginAllowed(origin =>
+                origin.StartsWith("http://localhost") ||  // Local development
+                origin.EndsWith(".vercel.app") ||         // Vercel deployments
+                origin.EndsWith(".netlify.app") ||        // Netlify deployments
+                origin.EndsWith(".onrender.com")          // Render deployments
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials(); // Enable credentials support
+            .AllowCredentials();
         });
 });
 
@@ -28,11 +32,11 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Task Manager API",
         Version = "v1",
-        Description = "A simple RESTful API for managing tasks",
+        Description = "A simple RESTful API for managing tasks - PLC Home Assignment 1",
         Contact = new Microsoft.OpenApi.Models.OpenApiContact
         {
-            Name = "Your Name",
-            Email = "your.email@example.com"
+            Name = "Harshit Kumar",
+            Email = "kumarharshitv21@gmail.com"
         }
     });
 });
@@ -40,21 +44,25 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
+// Enable Swagger in both Development and Production for assignment demo
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Task Manager API v1");
-        c.RoutePrefix = "swagger"; // Access at /swagger
-    });
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Task Manager API v1");
+    c.RoutePrefix = "swagger"; // Access at /swagger
+});
+
+// IMPORTANT: CORS must be placed before UseHttpsRedirection
+app.UseCors("AllowReactApp");
+
+// Only redirect to HTTPS in production if needed
+if (!app.Environment.IsDevelopment())
+{
+    // Comment out HTTPS redirect for free tier deployments
+    // app.UseHttpsRedirection();
 }
 
-// IMPORTANT: CORS must be placed before UseHttpsRedirection and after UseRouting
-app.UseCors("AllowReactApp");
-app.UseHttpsRedirection();
-
-// In-memory storage - simple list (thread-safe for development)
+// In-memory storage - simple list (thread-safe for concurrent requests)
 var tasks = new List<TaskItem>();
 var nextId = 1;
 var taskLock = new object(); // Thread safety for in-memory operations
@@ -113,7 +121,8 @@ app.MapPost("/api/tasks", (TaskItem task) =>
         {
             Id = nextId++,
             Description = task.Description.Trim(),
-            IsCompleted = task.IsCompleted
+            IsCompleted = task.IsCompleted,
+            CreatedAt = DateTime.UtcNow
         };
         
         tasks.Add(newTask);
@@ -185,26 +194,49 @@ app.MapDelete("/api/tasks/{id:int}", (int id) =>
 .Produces(StatusCodes.Status204NoContent)
 .Produces(StatusCodes.Status404NotFound);
 
-// Health check endpoint (bonus)
+// Health check endpoint (bonus feature)
 app.MapGet("/api/health", () => Results.Ok(new 
 { 
     status = "Healthy",
     timestamp = DateTime.UtcNow,
-    taskCount = tasks.Count
+    taskCount = tasks.Count,
+    environment = app.Environment.EnvironmentName,
+    version = "1.0.0"
 }))
 .WithName("HealthCheck")
 .WithDescription("API health check endpoint")
 .WithTags("System")
-.ExcludeFromDescription(); // Hide from main API docs
+.ExcludeFromDescription();
+
+// Root endpoint
+app.MapGet("/", () => Results.Ok(new
+{
+    message = "Task Manager API - Home Assignment 1",
+    version = "1.0.0",
+    author = "Harshit Kumar",
+    endpoints = new
+    {
+        swagger = "/swagger",
+        health = "/api/health",
+        tasks = "/api/tasks"
+    }
+}))
+.WithName("Root")
+.WithDescription("API information endpoint")
+.ExcludeFromDescription();
 
 // Log startup information
+var environment = app.Environment.EnvironmentName;
+var currentPort = port;
+
 Console.WriteLine("╔════════════════════════════════════════════════════════╗");
 Console.WriteLine("║          🚀 Task Manager API is Running!              ║");
 Console.WriteLine("╚════════════════════════════════════════════════════════╝");
-Console.WriteLine($"📍 HTTP:    http://localhost:5223");
-Console.WriteLine($"📍 HTTPS:   https://localhost:7166");
-Console.WriteLine($"📚 Swagger: http://localhost:5223/swagger");
-Console.WriteLine($"💚 Health:  http://localhost:5223/api/health");
+Console.WriteLine($"🌍 Environment: {environment}");
+Console.WriteLine($"🔌 Port: {currentPort}");
+Console.WriteLine($"📍 Base URL: http://0.0.0.0:{currentPort}");
+Console.WriteLine($"📚 Swagger UI: http://0.0.0.0:{currentPort}/swagger");
+Console.WriteLine($"💚 Health Check: http://0.0.0.0:{currentPort}/api/health");
 Console.WriteLine("═══════════════════════════════════════════════════════════");
 
 app.Run();
