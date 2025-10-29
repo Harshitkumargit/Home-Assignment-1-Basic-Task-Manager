@@ -244,28 +244,43 @@ function App() {
             </div>
           </form>
 
+          {/* Filter Buttons - Active has only green dot, no icon */}
           <div className="flex gap-3 mb-6 animate-slideUp" style={{ animationDelay: '0.1s' }}>
-            {[
-              { key: 'all', icon: '📋', label: 'All', count: tasks.length },
-              { key: 'active', icon: '🔄', label: 'Active', count: activeCount, showDot: true },
-              { key: 'completed', icon: '✅', label: 'Completed', count: completedCount }
-            ].map(({ key, icon, label, count, showDot }) => (
-              <button
-                key={key}
-                onClick={() => setFilter(key as TaskFilter)}
-                className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 ${
-                  filter === key
-                    ? 'bg-blue-500 text-white shadow-lg scale-105'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {showDot && (
-                  <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse-glow"></span>
-                )}
-                <span className="inline-block mr-1">{icon}</span>
-                {label} ({count})
-              </button>
-            ))}
+            <button
+              onClick={() => setFilter('all')}
+              className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 ${
+                filter === 'all'
+                  ? 'bg-blue-500 text-white shadow-lg scale-105'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <span className="inline-block mr-1">📋</span>
+              All ({tasks.length})
+            </button>
+            
+            <button
+              onClick={() => setFilter('active')}
+              className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 ${
+                filter === 'active'
+                  ? 'bg-blue-500 text-white shadow-lg scale-105'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse-glow align-middle"></span>
+              Active ({activeCount})
+            </button>
+            
+            <button
+              onClick={() => setFilter('completed')}
+              className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 ${
+                filter === 'completed'
+                  ? 'bg-blue-500 text-white shadow-lg scale-105'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <span className="inline-block mr-1">✅</span>
+              Completed ({completedCount})
+            </button>
           </div>
 
           {isLoading && tasks.length === 0 ? (
