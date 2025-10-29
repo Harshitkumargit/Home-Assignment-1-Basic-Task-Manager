@@ -247,9 +247,9 @@ function App() {
           <div className="flex gap-3 mb-6 animate-slideUp" style={{ animationDelay: '0.1s' }}>
             {[
               { key: 'all', icon: '📋', label: 'All', count: tasks.length },
-              { key: 'active', icon: '🔄', label: 'Active', count: activeCount },
+              { key: 'active', icon: '🔄', label: 'Active', count: activeCount, showDot: true },
               { key: 'completed', icon: '✅', label: 'Completed', count: completedCount }
-            ].map(({ key, icon, label, count }) => (
+            ].map(({ key, icon, label, count, showDot }) => (
               <button
                 key={key}
                 onClick={() => setFilter(key as TaskFilter)}
@@ -259,7 +259,10 @@ function App() {
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                <span className="inline-block mr-1 animate-bounce-subtle">{icon}</span>
+                {showDot && (
+                  <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse-glow"></span>
+                )}
+                <span className="inline-block mr-1">{icon}</span>
                 {label} ({count})
               </button>
             ))}
