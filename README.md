@@ -70,17 +70,12 @@ A modern, full-stack task management application demonstrating professional deve
 
 ## 🚀 Live Demo
 
-> **Note:** Add deployment links here once deployed
-
-- **Frontend:** `https://your-vercel-deployment.vercel.app` (Coming soon)
-- **Backend API:** `https://your-render-deployment.onrender.com` (Coming soon)
-- **API Documentation:** `https://your-render-deployment.onrender.com/swagger` (Coming soon)
-
-**Local Development:**
-
-- Frontend: `http://localhost:5173`
-- Backend: `http://localhost:5223`
-- Swagger UI: `http://localhost:5223/swagger`
+- **Frontend:** `[https://your-vercel-deployment.vercel.app](https://home-assignment-1-basic-task-manager.vercel.app
+)` 
+- **Backend API:** `[https://your-render-deployment.onrender.com](https://basic-task-manager-api.onrender.com
+)`
+- **API Documentation:** `[https://your-render-deployment.onrender.com/swagger](https://basic-task-manager-api.onrender.com/swagger
+)` 
 
 ---
 
@@ -91,7 +86,7 @@ A modern, full-stack task management application demonstrating professional deve
 - ✅ **Create Tasks** - Add new tasks with descriptions (1-500 characters)
 - ✅ **View Tasks** - Display all tasks in an organized, scrollable list
 - ✅ **Update Tasks** - Mark tasks as completed/uncompleted with checkbox toggle
-- ✅ **Delete Tasks** - Remove tasks with confirmation dialog to prevent accidents
+- ✅ **Delete Tasks** - Remove tasks with a confirmation dialog to prevent accidents
 - ✅ **Edit Tasks** - Modify task descriptions inline with save/cancel options
 
 ### Enhanced Features (Bonus) ⭐
