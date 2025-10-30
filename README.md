@@ -189,8 +189,6 @@ Home-Assignment-1-Basic-Task-Manager/
 │
 └── README.md # This file
 
-text
-
 ---
 
 ## 🚀 Getting Started
