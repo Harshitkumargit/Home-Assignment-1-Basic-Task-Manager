@@ -161,6 +161,7 @@ Home-Assignment-1-Basic-Task-Manager/
 │ ├── bin/ # Build output (ignored by Git)
 │ ├── obj/ # Build artifacts (ignored by Git)
 │ ├── .gitignore # Backend ignore rules
+│ ├── Dockerfile # Docker configuration for deployment
 │ ├── Program.cs # API endpoints & configuration
 │ ├── TaskManagerAPI.csproj # Project file & dependencies
 │ ├── appsettings.json # App configuration
@@ -172,9 +173,9 @@ Home-Assignment-1-Basic-Task-Manager/
 │ │ │ └── api.ts # API service layer with Axios
 │ │ ├── types/
 │ │ │ └── Task.ts # TypeScript interfaces
-│ │ ├── App.tsx # Main component
+│ │ ├── App.tsx # Main component with animations
 │ │ ├── main.tsx # Application entry point
-│ │ ├── index.css # Global styles (Tailwind)
+│ │ ├── index.css # Global styles & animations
 │ │ └── vite-env.d.ts # Vite type definitions
 │ ├── node_modules/ # Dependencies (ignored by Git)
 │ ├── .gitignore # Frontend ignore rules
@@ -188,7 +189,6 @@ Home-Assignment-1-Basic-Task-Manager/
 │ └── vite.config.ts # Vite build configuration
 │
 └── README.md # This file
-
 ---
 
 ## 🚀 Getting Started
