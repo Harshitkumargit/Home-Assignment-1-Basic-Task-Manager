@@ -149,46 +149,55 @@ A modern, full-stack task management application demonstrating professional deve
 
 ---
 
-## 📁 Project Structure
-
 Home-Assignment-1-Basic-Task-Manager/
 │
-├── backend/ # .NET 8 REST API
-│ ├── Models/
-│ │ └── TaskItem.cs # Task entity with validation
-│ ├── Properties/
-│ │ └── launchSettings.json # Launch profiles & ports
-│ ├── bin/ # Build output (ignored by Git)
-│ ├── obj/ # Build artifacts (ignored by Git)
-│ ├── .gitignore # Backend ignore rules
-│ ├── Dockerfile # Docker configuration for deployment
-│ ├── Program.cs # API endpoints & configuration
-│ ├── TaskManagerAPI.csproj # Project file & dependencies
-│ ├── appsettings.json # App configuration
-│ └── appsettings.Development.json # Development settings
+├── backend/                              # .NET 8 REST API
+│   │
+│   ├── Models/
+│   │   └── TaskItem.cs                   # Task entity with validation
+│   │
+│   ├── Properties/
+│   │   └── launchSettings.json           # Launch profiles & ports
+│   │
+│   ├── bin/                              # Build output (ignored by Git)
+│   ├── obj/                              # Build artifacts (ignored by Git)
+│   │
+│   ├── .gitignore                        # Backend ignore rules
+│   ├── Dockerfile                        # Docker configuration
+│   ├── Program.cs                        # API endpoints & configuration
+│   ├── TaskManagerAPI.csproj             # Project file & dependencies
+│   ├── appsettings.json                  # App configuration
+│   └── appsettings.Development.json      # Development settings
 │
-├── frontend/ # React + TypeScript SPA
-│ ├── src/
-│ │ ├── services/
-│ │ │ └── api.ts # API service layer with Axios
-│ │ ├── types/
-│ │ │ └── Task.ts # TypeScript interfaces
-│ │ ├── App.tsx # Main component with animations
-│ │ ├── main.tsx # Application entry point
-│ │ ├── index.css # Global styles & animations
-│ │ └── vite-env.d.ts # Vite type definitions
-│ ├── node_modules/ # Dependencies (ignored by Git)
-│ ├── .gitignore # Frontend ignore rules
-│ ├── index.html # HTML template
-│ ├── package.json # Dependencies & scripts
-│ ├── package-lock.json # Locked dependency versions
-│ ├── postcss.config.js # PostCSS configuration
-│ ├── tailwind.config.js # Tailwind configuration
-│ ├── tsconfig.json # TypeScript configuration
-│ ├── tsconfig.node.json # TypeScript Node config
-│ └── vite.config.ts # Vite build configuration
+├── frontend/                             # React + TypeScript SPA
+│   │
+│   ├── src/
+│   │   │
+│   │   ├── services/
+│   │   │   └── api.ts                    # API service layer with Axios
+│   │   │
+│   │   ├── types/
+│   │   │   └── Task.ts                   # TypeScript interfaces
+│   │   │
+│   │   ├── App.tsx                       # Main component with animations
+│   │   ├── main.tsx                      # Application entry point
+│   │   ├── index.css                     # Global styles & animations
+│   │   └── vite-env.d.ts                 # Vite type definitions
+│   │
+│   ├── node_modules/                     # Dependencies (ignored by Git)
+│   │
+│   ├── .gitignore                        # Frontend ignore rules
+│   ├── index.html                        # HTML template
+│   ├── package.json                      # Dependencies & scripts
+│   ├── package-lock.json                 # Locked dependency versions
+│   ├── postcss.config.js                 # PostCSS configuration
+│   ├── tailwind.config.js                # Tailwind configuration
+│   ├── tsconfig.json                     # TypeScript configuration
+│   ├── tsconfig.node.json                # TypeScript Node config
+│   └── vite.config.ts                    # Vite build configuration
 │
-└── README.md # This file
+└── README.md                             # This file
+
 ---
 
 ## 🚀 Getting Started
